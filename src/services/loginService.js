@@ -1,16 +1,13 @@
 import axios from "axios";
 
-const baseURL = `/api/users`
+const baseURL = `/api/login`
 const login = async(userCredentials) => {
-    const response = await fetch(baseURL, {
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },body:JSON.stringify(userCredentials)
-    })
-
-    const data = await response.json()
-    return data
+    try {
+        const response = await axios.post(baseURL, userCredentials)
+        return response.data
+    } catch (error) {
+        throw new Error(error.response.data.error)
+    }
 }
 
 export default {login}
