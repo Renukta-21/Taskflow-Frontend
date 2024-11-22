@@ -1,16 +1,26 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import loginService from './services/loginService'
 
 function LoginForm() {
+  const [user, setUser] = useState(null)
   const [userFields, setUserFields] = useState({
     username: '',
     password: ''
   })
-  const [error, setError] = useState(null)
 
+  useEffect(() => {
+    const storedUser = localStorage.getItem('userLogged') 
+    if(storedUser){
+      setUser(JSON.parse(storedUser))
+    }
+
+  }, [])
+
+  const [error, setError] = useState(null)
+  const [token, setToken] = useState(null)
   const handleLogin = async (e) => {
     e.preventDefault()
-    if (!userFields.username || !userFields.password ) {
+    if (!userFields.username || !userFields.password) {
       setError('Todos los campos son obligatorios');
       return
     }
@@ -20,6 +30,7 @@ function LoginForm() {
         username: '',
         password: ''
       })
+      localStorage.setItem('userLogged', JSON.stringify(user))
       setError(null)
     } catch (error) {
       setError(error.message)
@@ -28,19 +39,21 @@ function LoginForm() {
   }
   return (
     <div>
-      <h2>Login</h2>
-      <form action="" onSubmit={handleLogin}>
-        <label htmlFor="usernameField">Username </label>
-        <input type="text" id="usernameField"
-          onChange={e => setUserFields(prevFields => ({ ...prevFields, username: e.target.value }))} />
-        <br /><br />
-        <label htmlFor="passwordField">Password </label>
-        <input type="text" id="passwordField"
-          onChange={e => setUserFields(prevFields => ({ ...prevFields, password: e.target.value }))} />
-        <br />
-        <button>Login</button>
-      </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {!user && <div>
+        <h2>Login</h2>
+        <form action="" onSubmit={handleLogin}>
+          <label htmlFor="usernameField">Username </label>
+          <input type="text" id="usernameField"
+            onChange={e => setUserFields(prevFields => ({ ...prevFields, username: e.target.value }))} />
+          <br /><br />
+          <label htmlFor="passwordField">Password </label>
+          <input type="text" id="passwordField"
+            onChange={e => setUserFields(prevFields => ({ ...prevFields, password: e.target.value }))} />
+          <br />
+          <button>Login</button>
+        </form>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+      </div>}
     </div>
   )
 }
