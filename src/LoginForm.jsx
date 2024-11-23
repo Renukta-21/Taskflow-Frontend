@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import loginService from './services/loginService'
 
-function LoginForm() {
-  const [user, setUser] = useState(null)
+function LoginForm({user,setUser}) {
   const [userFields, setUserFields] = useState({
     username: '',
     password: ''
@@ -31,6 +30,7 @@ function LoginForm() {
         password: ''
       })
       localStorage.setItem('userLogged', JSON.stringify(user))
+      setUser(user)
       setError(null)
     } catch (error) {
       setError(error.message)
@@ -39,7 +39,7 @@ function LoginForm() {
   }
   return (
     <div>
-      {!user && <div>
+      <div>
         <h2>Login</h2>
         <form action="" onSubmit={handleLogin}>
           <label htmlFor="usernameField">Username </label>
@@ -53,7 +53,7 @@ function LoginForm() {
           <button>Login</button>
         </form>
         {error && <p style={{ color: 'red' }}>{error}</p>}
-      </div>}
+      </div>
     </div>
   )
 }
