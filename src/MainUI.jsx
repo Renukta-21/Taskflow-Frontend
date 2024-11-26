@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react'
-useState
+import { useEffect, useState } from 'react'
+import Categories from './Categories';
+
 function MainUI({ user }) {
     const [greeting, setGreeting] = useState(getGreeting())
     return (
         <div>
             <h3>{getGreeting()} <p style={{ color: 'blue', display:'inline' }}>{user.username}</p></h3>
             <h4>{getFormattedDate()}</h4>
+            <Categories/>
         </div>
+
     )
 }
 const getFormattedDate = () => {

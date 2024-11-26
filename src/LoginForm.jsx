@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import loginService from './services/loginService'
+import categoriesService from './services/categoriesService'
 
-function LoginForm({user,setUser}) {
+function LoginForm({setUser}) {
   const [userFields, setUserFields] = useState({
     username: '',
     password: ''
@@ -10,13 +11,15 @@ function LoginForm({user,setUser}) {
   useEffect(() => {
     const storedUser = localStorage.getItem('userLogged') 
     if(storedUser){
-      setUser(JSON.parse(storedUser))
+      const parsedUser = JSON.parse(storedUser);
+      categoriesService.setToken(parsedUser.token); 
+      setUser(parsedUser);
     }
 
   }, [])
 
   const [error, setError] = useState(null)
-  const [token, setToken] = useState(null)
+  
   const handleLogin = async (e) => {
     e.preventDefault()
     if (!userFields.username || !userFields.password) {
@@ -30,6 +33,7 @@ function LoginForm({user,setUser}) {
         password: ''
       })
       localStorage.setItem('userLogged', JSON.stringify(user))
+      categoriesService.setToken(user.token)
       setUser(user)
       setError(null)
     } catch (error) {
