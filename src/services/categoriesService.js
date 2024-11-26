@@ -6,7 +6,7 @@ const setToken = (actualToken) => {
   token = `Bearer ${actualToken}`
 }
 
-const getAll = async() => {
+const getAll = async () => {
   try {
     const response = await axios.get(baseURL, {
       headers: {
@@ -20,7 +20,17 @@ const getAll = async() => {
   }
 }
 
-const create = ()=>{
-    
+const create = async (newTask) => {
+  try {
+    const response = await axios.post(baseURL, newTask, {
+      headers: {
+        Authorization: token,
+      },
+
+    })
+    return response.data
+  } catch (error) {
+    throw new Error(error.response.data.error)
+  }
 }
-export default { getAll, setToken }
+export default { getAll, setToken, create }

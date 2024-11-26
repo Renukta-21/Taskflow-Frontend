@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
 import categoriesService from './services/categoriesService'
 
-function Categories() {
-  const [categories, setCategories] = useState([])
-
+function Categories({categories, setCategories}) {
   useEffect(() => {
     const getCategories = async () => {
       const response = await categoriesService.getAll()
@@ -14,6 +12,7 @@ function Categories() {
 
   return (
     <div>
+      <h3>Private</h3>
       {categories.length>0 &&
         categories.map((cat) => {
           return (
@@ -23,6 +22,10 @@ function Categories() {
           )
         })}
         <button>Create List</button>
+        <h3>Group</h3>
+        <div>
+          <h4>Coding Project</h4>
+        </div>
     </div>
   )
 }
