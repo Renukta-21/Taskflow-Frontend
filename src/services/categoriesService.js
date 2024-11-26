@@ -1,16 +1,12 @@
 import axios from 'axios'
+import tokenService from './tokenService'
 const baseURL = '/api/categories'
-
-let token
-const setToken = (actualToken) => {
-  token = `Bearer ${actualToken}`
-}
 
 const getAll = async () => {
   try {
     const response = await axios.get(baseURL, {
       headers: {
-        Authorization: token,
+        Authorization: tokenService.getToken(),
       },
     })
 
@@ -24,7 +20,7 @@ const create = async (newTask) => {
   try {
     const response = await axios.post(baseURL, newTask, {
       headers: {
-        Authorization: token,
+        Authorization: tokenService.getToken(),
       },
 
     })
@@ -33,4 +29,4 @@ const create = async (newTask) => {
     throw new Error(error.response.data.error)
   }
 }
-export default { getAll, setToken, create }
+export default { getAll, create }
