@@ -4,20 +4,26 @@ import Categories from './Categories'
 import Tasks from './Tasks'
 
 function MainUI({ user }) {
-    const [categories, setCategories] = useState([])
-    const [tasks, setTasks] = useState([])
-
+  const [categories, setCategories] = useState([])
+  const [tasks, setTasks] = useState([])
+    const [visibleTasks, setVisibleTasks] = useState('all')
+    const handleVisibleTasks=(categoryName)=>{
+        setVisibleTasks(categoryName)
+    }
   return (
-    <div style={{ display: 'flex', gap: '100px' }}>
-      <Categories categories={categories} setCategories={setCategories}/>
+    <div style={{ display: 'flex', gap: '100px'}}>
+      <Categories categories={categories} setCategories={setCategories} handleVisibleTasks={handleVisibleTasks}/>
       <div>
-        <h3>
-          {getGreeting()}{' '}
-          <p style={{ color: 'blue', display: 'inline' }}>{user.username}</p>
-        </h3>
+        <div style={{display:'flex'}}>
+          <h3>
+            {getGreeting()}{' '}
+            <p style={{ color: 'blue', display: 'inline' }}>{user.username}</p>
+          </h3>
+          <button style={{marginLeft:'500px'}}>Filter tasks</button>
+        </div>
         <h4>{getFormattedDate()}</h4>
-        <Tasks tasks={tasks} setTasks={setTasks}/>
-        <AddNewTask categories={categories} setCategories={setCategories}/>
+        <Tasks tasks={tasks} setTasks={setTasks} visibleTasks={visibleTasks}/>
+        <AddNewTask categories={categories} setCategories={setCategories} />
       </div>
     </div>
   )

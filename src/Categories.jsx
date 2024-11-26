@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import categoriesService from './services/categoriesService'
 
-function Categories({categories, setCategories}) {
+function Categories({categories, setCategories, handleVisibleTasks}) {
   useEffect(() => {
     const getCategories = async () => {
       const response = await categoriesService.getAll()
@@ -16,12 +16,14 @@ function Categories({categories, setCategories}) {
       {categories.length>0 &&
         categories.map((cat) => {
           return (
-            <CategoryCard key={cat._id}>
+            <button key={cat._id} onClick={()=> handleVisibleTasks(cat.name)} >
                 <p>{cat.name} {cat.icon}</p>
-            </CategoryCard>
+            </button>
           )
         })}
         <button>Create List</button>
+        <br /><br />
+        <button>Show All tasks</button>
         <h3>Group</h3>
         <div>
           <h4>Coding Project</h4>
@@ -30,10 +32,5 @@ function Categories({categories, setCategories}) {
   )
 }
 
-const CategoryCard = ({children})=>{
-    return(
-        <div>{children}</div>
-    )
-}
 
 export default Categories
