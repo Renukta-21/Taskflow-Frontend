@@ -9,7 +9,6 @@ function Tasks({ tasks, setTasks, visibleTasks }) {
       try {
         const response = await tasksServices.getAll()
         setTasks(response)
-        console.log(response)
       } catch (error) {
         setError(error)
       }
@@ -17,11 +16,11 @@ function Tasks({ tasks, setTasks, visibleTasks }) {
     getTasks()
   }, [])
 
-  const filteredTasks = tasks.filter(task=> task.category.name === visibleTasks)
-  console.log(filteredTasks, visibleTasks)
+  const filteredTasks = visibleTasks ? tasks.filter(task=> task.category.name === visibleTasks) : tasks
+  
   return (
     <div>
-      {filteredTasks.length > 0 &&
+      {filteredTasks.length > 0 ?
         filteredTasks.map((task) => (
           <TaskCard
             key={task._id}
@@ -29,7 +28,7 @@ function Tasks({ tasks, setTasks, visibleTasks }) {
             category={task.category}
             description={task.description}
           />
-        ))}
+        )): <p>No tasks found {visibleTasks!==null && 'in this category'}</p> }
       {error && <p>{error}</p>}
     </div>
   )

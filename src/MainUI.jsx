@@ -6,7 +6,7 @@ import Tasks from './Tasks'
 function MainUI({ user }) {
   const [categories, setCategories] = useState([])
   const [tasks, setTasks] = useState([])
-    const [visibleTasks, setVisibleTasks] = useState('all')
+    const [visibleTasks, setVisibleTasks] = useState(null)
     const handleVisibleTasks=(categoryName)=>{
         setVisibleTasks(categoryName)
     }
