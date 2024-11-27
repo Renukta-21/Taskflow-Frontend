@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import loginService from './services/loginService'
-import categoriesService from './services/categoriesService'
 import tokenService from './services/tokenService'
 
 function LoginForm({setUser}) {
@@ -34,7 +33,7 @@ function LoginForm({setUser}) {
         password: ''
       })
       localStorage.setItem('userLogged', JSON.stringify(user))
-      categoriesService.setToken(user.token)
+      tokenService.setToken(user.token)
       setUser(user)
       setError(null)
     } catch (error) {

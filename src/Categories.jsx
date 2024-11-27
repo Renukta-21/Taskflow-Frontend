@@ -1,13 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import categoriesService from './services/categoriesService'
+/* import resetServices from './services/resetServices' */
 
-function Categories({categories, setCategories, handleVisibleTasks}) {
+function Categories({categories, setCategories, setVisibleTasks, handleVisibleTasks}) {
   useEffect(() => {
     const getCategories = async () => {
       const response = await categoriesService.getAll()
       setCategories(response)
     }
     getCategories()
+    /* const resetDB = async()=>{a
+      await resetServices.resetDB()
+    }
+    resetDB() */
   }, [])
 
   return (
@@ -23,7 +28,7 @@ function Categories({categories, setCategories, handleVisibleTasks}) {
         })}
         <button>Create List</button>
         <br /><br />
-        <button>Show All tasks</button>
+        <button onClick={()=> setVisibleTasks(null)}>Show All tasks</button>
         <h3>Group</h3>
         <div>
           <h4>Coding Project</h4>

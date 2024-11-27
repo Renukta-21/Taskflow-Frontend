@@ -1,15 +1,32 @@
 import { useState } from 'react'
+import tasksServices from './services/tasksServices'
 
-function AddNewTask({ categories, setCategories }) {
+function AddNewTask({ tasks, setTasks,categories }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState(null)
   const [newTaskDescription, setNewTaskDescription] = useState('')
+  const [newTaskTitle, setNewTaskTitle] = useState('')
+
   const handleClick = () => {
     setMenuOpen(!menuOpen)
   }
-  const handleNewTask = () => {
-    console.log(newTaskDescription)
-    console.log(selectedCategory)
+  const handleNewTask = async () => {
+    const newTask = {
+      category: selectedCategory,
+      title: newTaskTitle,
+      description: newTaskDescription,
+    }
+
+    try {
+      const response = await tasksServices.create(newTask)
+      const category = categories.find(cat=> cat._id === selectedCategory)
+      console.log(category)
+
+      setTasks(prevTasks => [...prevTasks, {...response, category}])
+      console.log(tasks)
+    } catch (error) {
+      console.log(error.message)
+    }
   }
   return (
     <div>
@@ -18,10 +35,17 @@ function AddNewTask({ categories, setCategories }) {
         <div style={{ marginTop: '25px' }}>
           <input
             type="text"
-            placeholder="Enter new Task"
+            placeholder="Enter task title"
+            value={newTaskTitle}
+            onChange={(e) => setNewTaskTitle(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Enter task description"
             value={newTaskDescription}
             onChange={(e) => setNewTaskDescription(e.target.value)}
           />
+
           <br />
           <br />
           {categories.length > 0 && (
@@ -45,8 +69,13 @@ const CategoryCardDrop = ({ categories, setSelectedCategory }) => {
   }
   return (
     <div>
-      <select name="" id="" onChange={handleSelectedOption} defaultValue='default'>
-      <option value="default" disabled>
+      <select
+        name=""
+        id=""
+        onChange={handleSelectedOption}
+        defaultValue="default"
+      >
+        <option value="default" disabled>
           Select a category
         </option>
         {categories.map((cat) => (

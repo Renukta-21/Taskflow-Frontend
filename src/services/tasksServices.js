@@ -15,4 +15,16 @@ const getAll = async () => {
   }
 }
 
-export default { getAll }
+const create = async(newTask) => {
+  try {
+    const response = await axios.post(baseURL, newTask, {
+      headers: {
+        Authorization: tokenService.getToken(),
+      },
+    })
+    return response.data
+  } catch (error) {
+    throw new Error(error.response.data.error)
+  }
+}
+export default { getAll, create }
