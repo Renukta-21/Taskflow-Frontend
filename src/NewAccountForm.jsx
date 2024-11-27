@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import userServices from './services/userServices'
 
 function NewAccountForm() {
     const [email, setEmail] = useState('')
@@ -6,9 +7,17 @@ function NewAccountForm() {
     const [password, setPassword] = useState('')
 const [error, setError] = useState(null)
     
-    const handleSubmit = (e)=>{
+    const handleSubmit = async(e)=>{
         e.preventDefault()
-        
+        const userCredentials = {
+            username, password, email
+        }
+        try {
+            const response = await userServices.create(userCredentials)
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
     }
 return (
     <div className=" flex w-full justify-center items-center">
