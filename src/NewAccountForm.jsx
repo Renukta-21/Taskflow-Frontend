@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import userServices from './services/userServices'
 
-function NewAccountForm() {
+function NewAccountForm({setHasAccount, hasAccount}) {
     const [email, setEmail] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -13,10 +13,11 @@ const [error, setError] = useState(null)
             username, password, email
         }
         try {
-            const response = await userServices.create(userCredentials)
-            console.log(response)
+            await userServices.create(userCredentials)
+            alert('Account created, please login')
+            setHasAccount(!hasAccount)
         } catch (error) {
-            console.log(error)
+            setError(error.message)
         }
     }
 return (

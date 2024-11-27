@@ -91,7 +91,7 @@ function LoginForm({ setUser }) {
         </div>
         {error && <p className="text-center text-red-600 mt-8">{error}</p>}
       </div>
-    </div>):<NewAccountForm/>
+    </div>):<NewAccountForm hasAccount={hasAccount} setHasAccount={setHasAccount}/>
   )
 }
 
