@@ -12,7 +12,7 @@ function MainUI({ user }) {
     setVisibleTasks(categoryName)
   }
   return (
-    <div style={{ display: 'flex', gap: '100px' }}>
+    <div className='flex min-h-screen'>
       <Categories
         tasks={tasks}
         setTasks={setTasks}

@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{
+    .sidebarButton{
+        @apply w-full py-3 px-4 my-1 flex justify-between bg-gray-100 rounded-lg hover:bg-gray-200
+    }
+}
