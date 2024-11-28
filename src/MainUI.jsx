@@ -12,7 +12,8 @@ function MainUI({ user }) {
     setVisibleTasks(categoryName)
   }
   return (
-    <div className='flex min-h-screen'>
+    <div className=' min-h-screen w-full bg-back-gray'>
+        <div className='mx-16 my-16 flex bg-main-gray border'>
       <Categories
         tasks={tasks}
         setTasks={setTasks}
@@ -21,22 +22,23 @@ function MainUI({ user }) {
         setVisibleTasks={setVisibleTasks}
         handleVisibleTasks={handleVisibleTasks}
       />
-      <div>
+      <div className='flex  flex-col justify-between py-8 px-5'>
         <div style={{ display: 'flex' }}>
           <h3>
             {getGreeting()}{' '}
             <p style={{ color: 'blue', display: 'inline' }}>{user.username}</p>
           </h3>
-          <button style={{ marginLeft: '500px' }}>Filter tasks</button>
+          {/* <button style={{ marginLeft: '500px' }}>Filter tasks</button> */}
+          <h4>{getFormattedDate()}</h4>
+          <Tasks tasks={tasks} setTasks={setTasks} visibleTasks={visibleTasks} />
         </div>
-        <h4>{getFormattedDate()}</h4>
-        <Tasks tasks={tasks} setTasks={setTasks} visibleTasks={visibleTasks} />
         <AddNewTask
         tasks={tasks}
           setTasks={setTasks}
           categories={categories}
           setCategories={setCategories}
         />
+      </div>
       </div>
     </div>
   )
