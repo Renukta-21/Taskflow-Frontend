@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import tasksServices from './services/tasksServices';
+import userServices from './services/userServices';
 
-function AddNewTask({ tasks, setTasks, categories, showGuide, setShowGuide }) {
-  const [menuOpen, setMenuOpen] = useState(false);
+function AddNewTask({  bsetTasks, categories, showGuide, menuOpen, setMenuOpen, userFirstLogin, setShowGuide }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [newTaskDescription, setNewTaskDescription] = useState('');
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
   const handleClick = () => {
-    setShowGuide(false)
     setMenuOpen(!menuOpen);
   };
 
@@ -17,15 +16,18 @@ function AddNewTask({ tasks, setTasks, categories, showGuide, setShowGuide }) {
       category: selectedCategory,
       title: newTaskTitle,
       description: newTaskDescription,
-    };
+      };
 
     try {
       const response = await tasksServices.create(newTask);
       const category = categories.find(cat => cat._id === selectedCategory);
-      console.log(category);
-
       setTasks(prevTasks => [...prevTasks, { ...response, category }]);
-      console.log(tasks);
+      setShowGuide(false)
+      if(userFirstLogin){
+        const response = await userServices.setFirstLogin({firstLogin:false})
+        localStorage.setItem('firstLogin', JSON.stringify({firstLogin:false}))
+        console.log(response)
+      }
     } catch (error) {
       console.log(error.message);
     }

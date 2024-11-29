@@ -11,9 +11,9 @@ const create = async (userCredentials) => {
     }
 
 }
-const setFirstLogin = async (userObject) => {
+const setFirstLogin = async (firstLoginValue) => {
     try {
-        const response = await axios.put(`${baseURL}/tutorial`, userObject, {
+        const response = await axios.put(`${baseURL}/tutorial`, firstLoginValue, {
             headers: {
                 Authorization: tokenService.getToken()
             }

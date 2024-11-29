@@ -18,10 +18,14 @@ function LoginForm({ setUser, setUserFirstLogin, userFirstLogin }) {
       tokenService.setToken(parsedUser.token)
       setUser(parsedUser)
     }
+    const firstLogin = localStorage.getItem('firstLogin')
+    if (firstLogin) {
+      setUserFirstLogin(JSON.parse(firstLogin))
+    }
   }, [])
 
   const [error, setError] = useState(null)
-  const handleCreateAccount = ()=>{
+  const handleCreateAccount = () => {
     setHasAccount(!hasAccount)
   }
   const handleLogin = async (e) => {
@@ -40,6 +44,7 @@ function LoginForm({ setUser, setUserFirstLogin, userFirstLogin }) {
       localStorage.setItem('userLogged', JSON.stringify(user))
       tokenService.setToken(user.token)
       const fetchedUser = await userServices.getUser();
+      localStorage.setItem('firstLogin', JSON.stringify(fetchedUser))
       setUserFirstLogin(fetchedUser);
       setUser(user)
       setError(null)
@@ -88,15 +93,15 @@ function LoginForm({ setUser, setUserFirstLogin, userFirstLogin }) {
           <button className="w-full bg-green-500 py-3 ">Login</button>
         </form>
         <div className="w-full flex">
-          <button 
-          onClick={handleCreateAccount}
-          className="underline mx-auto my-2">
+          <button
+            onClick={handleCreateAccount}
+            className="underline mx-auto my-2">
             New? Create an account
           </button>
         </div>
         {error && <p className="text-center text-red-600 mt-8">{error}</p>}
       </div>
-    </div>):<NewAccountForm hasAccount={hasAccount} setHasAccount={setHasAccount} userFirstLogin={userFirstLogin}  />
+    </div>) : <NewAccountForm hasAccount={hasAccount} setHasAccount={setHasAccount} userFirstLogin={userFirstLogin} />
   )
 }
 

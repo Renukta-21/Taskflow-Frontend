@@ -3,14 +3,14 @@ import AddNewTask from './AddNewTask'
 import Categories from './Categories'
 import Tasks from './Tasks'
 
-function MainUI({ user, userFirstLogin }) {
+function MainUI({ user, userFirstLogin, setUserFirstLogin }) {
     const [categories, setCategories] = useState([])
     const [tasks, setTasks] = useState([])
+    const [menuOpen, setMenuOpen] = useState(false);
     const [visibleTasks, setVisibleTasks] = useState(null)
-    const [showGuide, setShowGuide] = useState(true)
+    const [showGuide, setShowGuide] = useState(userFirstLogin.firstLogin)
 
     const handleVisibleTasks = (categoryName) => {
-        console.log(userFirstLogin)
         setVisibleTasks(categoryName)
     }
     return (
@@ -31,14 +31,18 @@ function MainUI({ user, userFirstLogin }) {
                         </h3>
                         {/* <button style={{ marginLeft: '500px' }}>Filter tasks</button> */}
                         <h4 className='font-thin text-black mb-5 '>{getFormattedDate()}</h4>
-                        <Tasks tasks={tasks} setTasks={setTasks} visibleTasks={visibleTasks} showGuide={showGuide} setShowGuide={setShowGuide} />
+                        <Tasks tasks={tasks} setTasks={setTasks} visibleTasks={visibleTasks} showGuide={showGuide} setShowGuide={setShowGuide} userFirstLogin={userFirstLogin} menuOpen={menuOpen}/>
                     </div>
                     <AddNewTask
-                        tasks={tasks}
+                    setShowGuide={setShowGuide}
                         setTasks={setTasks}
                         categories={categories}
                         setCategories={setCategories}
-                        showGuide={showGuide} setShowGuide={setShowGuide}
+                        userFirstLogin={userFirstLogin}
+                        menuOpen={menuOpen}
+                        setMenuOpen={setMenuOpen}
+                        setUserFirstLogin={setUserFirstLogin}
+                        showGuide={showGuide} 
                     />
                 </div>
             </div>

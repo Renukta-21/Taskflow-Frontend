@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import tasksServices from './services/tasksServices'
 
-function Tasks({ tasks, setTasks, visibleTasks, showGuide, setShowGuide }) {
+function Tasks({ tasks, setTasks, visibleTasks, showGuide, setShowGuide, menuOpen }) {
   const [error, setError] = useState(null)
 
   useEffect(() => {
@@ -21,12 +21,12 @@ function Tasks({ tasks, setTasks, visibleTasks, showGuide, setShowGuide }) {
     : tasks
 
   const handleGuideClose = () => {
-    setShowGuide(false) // Cierra el tutorial
+    setShowGuide(false) 
   }
 
   return (
     <div className="relative flex flex-col h-full w-full">
-      {/* Overlay oscuro si el tutorial está activo */}
+
       {showGuide && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-10"></div>
       )}
@@ -47,9 +47,8 @@ function Tasks({ tasks, setTasks, visibleTasks, showGuide, setShowGuide }) {
       )}
 
       {/* Flecha animada apuntando al botón */}
-      {showGuide && (
+      {showGuide && !menuOpen && (
         <div className="absolute z-30 top-64  left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce ">
-          {/* <p className="text-white mb-2 text-sm">Click here!</p> */}
           <div className='h-[200px] w-1 bg-white'></div>
           <div className="w-10 h-10 border-r-4 border-b-4 border-white transform rotate-45 "></div>
         </div>
