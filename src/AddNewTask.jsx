@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import tasksServices from './services/tasksServices';
 
-function AddNewTask({ tasks, setTasks, categories }) {
+function AddNewTask({ tasks, setTasks, categories, showGuide, setShowGuide }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [newTaskDescription, setNewTaskDescription] = useState('');
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
   const handleClick = () => {
+    setShowGuide(false)
     setMenuOpen(!menuOpen);
   };
 
@@ -31,7 +32,7 @@ function AddNewTask({ tasks, setTasks, categories }) {
   };
 
   return (
-    <div className="relative ml-60">
+    <div className={` ml-60 ${showGuide ? 'absolute bottom-28 z-20' : 'relative'}`}>
       <button
         onClick={handleClick}
         className="bg-black text-white py-2 w-[400px] rounded-lg"

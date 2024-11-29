@@ -5,6 +5,7 @@ function NewAccountForm({setHasAccount, hasAccount}) {
     const [email, setEmail] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    
 const [error, setError] = useState(null)
     
     const handleSubmit = async(e)=>{
@@ -14,6 +15,7 @@ const [error, setError] = useState(null)
         }
         try {
             await userServices.create(userCredentials)
+            setUserObject(response)
             alert('Account created, please login')
             setHasAccount(!hasAccount)
         } catch (error) {

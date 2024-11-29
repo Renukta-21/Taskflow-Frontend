@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import loginService from './services/loginService'
 import tokenService from './services/tokenService'
 import NewAccountForm from './NewAccountForm'
+import userServices from './services/userServices'
 
-function LoginForm({ setUser }) {
+function LoginForm({ setUser, setUserFirstLogin, userFirstLogin }) {
   const [hasAccount, setHasAccount] = useState(false)
   const [userFields, setUserFields] = useState({
     username: '',
@@ -36,6 +37,8 @@ function LoginForm({ setUser }) {
         username: '',
         password: '',
       })
+      const fetchedUser = await userServices.getUser();
+      setUserFirstLogin(fetchedUser);
       localStorage.setItem('userLogged', JSON.stringify(user))
       tokenService.setToken(user.token)
       setUser(user)
@@ -91,7 +94,7 @@ function LoginForm({ setUser }) {
         </div>
         {error && <p className="text-center text-red-600 mt-8">{error}</p>}
       </div>
-    </div>):<NewAccountForm hasAccount={hasAccount} setHasAccount={setHasAccount}/>
+    </div>):<NewAccountForm hasAccount={hasAccount} userFirstLogin={userFirstLogin}  />
   )
 }
 
