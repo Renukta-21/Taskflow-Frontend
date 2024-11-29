@@ -26,7 +26,11 @@ const setFirstLogin = async (userObject) => {
 
 const getUser=async()=>{
     try {
-        const response = await axios.get(`${baseURL}/tutorial`)
+        const response = await axios.get(`${baseURL}/tutorial`, {
+            headers:{
+                Authorization: tokenService.getToken()
+            }
+        })
     return response.data
     } catch (error) {
         throw new Error(error.response.data.error)

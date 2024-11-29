@@ -37,10 +37,10 @@ function LoginForm({ setUser, setUserFirstLogin, userFirstLogin }) {
         username: '',
         password: '',
       })
-      const fetchedUser = await userServices.getUser();
-      setUserFirstLogin(fetchedUser);
       localStorage.setItem('userLogged', JSON.stringify(user))
       tokenService.setToken(user.token)
+      const fetchedUser = await userServices.getUser();
+      setUserFirstLogin(fetchedUser);
       setUser(user)
       setError(null)
     } catch (error) {
@@ -62,6 +62,7 @@ function LoginForm({ setUser, setUserFirstLogin, userFirstLogin }) {
             type="text"
             id="usernameField"
             className="w-full mb-5 px-5 py-2"
+            value={userFields.username}
             onChange={(e) =>
               setUserFields((prevFields) => ({
                 ...prevFields,
@@ -75,6 +76,7 @@ function LoginForm({ setUser, setUserFirstLogin, userFirstLogin }) {
             type="text"
             id="passwordField"
             className="w-full mb-5 px-5 py-2"
+            value={userFields.password}
             onChange={(e) =>
               setUserFields((prevFields) => ({
                 ...prevFields,
@@ -94,7 +96,7 @@ function LoginForm({ setUser, setUserFirstLogin, userFirstLogin }) {
         </div>
         {error && <p className="text-center text-red-600 mt-8">{error}</p>}
       </div>
-    </div>):<NewAccountForm hasAccount={hasAccount} userFirstLogin={userFirstLogin}  />
+    </div>):<NewAccountForm hasAccount={hasAccount} setHasAccount={setHasAccount} userFirstLogin={userFirstLogin}  />
   )
 }
 

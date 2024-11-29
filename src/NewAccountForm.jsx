@@ -15,7 +15,6 @@ const [error, setError] = useState(null)
         }
         try {
             await userServices.create(userCredentials)
-            setUserObject(response)
             alert('Account created, please login')
             setHasAccount(!hasAccount)
         } catch (error) {

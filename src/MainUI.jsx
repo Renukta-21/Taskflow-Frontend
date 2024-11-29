@@ -3,13 +3,14 @@ import AddNewTask from './AddNewTask'
 import Categories from './Categories'
 import Tasks from './Tasks'
 
-function MainUI({ user }) {
+function MainUI({ user, userFirstLogin }) {
     const [categories, setCategories] = useState([])
     const [tasks, setTasks] = useState([])
     const [visibleTasks, setVisibleTasks] = useState(null)
     const [showGuide, setShowGuide] = useState(true)
 
     const handleVisibleTasks = (categoryName) => {
+        console.log(userFirstLogin)
         setVisibleTasks(categoryName)
     }
     return (

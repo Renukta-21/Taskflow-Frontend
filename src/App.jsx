@@ -14,7 +14,7 @@ function App() {
         setUser={setUser}
         userFirstLogin={userFirstLogin}
         setUserFirstLogin={setUserFirstLogin} />
-      ) : <MainUI user={user} />}
+      ) : <MainUI user={user} userFirstLogin={userFirstLogin} />}
     </div>
   )
 }
