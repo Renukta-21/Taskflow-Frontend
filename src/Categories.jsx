@@ -35,6 +35,8 @@ function Categories({
 }) {
 
   const [newCategoryMenu, setNewCategoryMenu] = useState(true)
+  const [catIcon, setCatIcon] = useState('')
+  const [categoryName, setCategoryName] = useState('')
   useEffect(() => {
     const getCategories = async () => {
       const response = await categoriesService.getAll()
@@ -86,11 +88,14 @@ function Categories({
       <div
           className={`absolute top-[50%] -translate-y-[50%] duration-500 transition-all left-[350px] text-black bg-white p-4 z-30 shadow-2xl ${newCategoryMenu ? '': 'opacity-0 pointer-events-none'}`}>
           <form action="" className=''>
-            <input type="text" className='newtaskInput border border-gray-400' placeholder='category name' />
+            <input type="text" className='newtaskInput border border-gray-400' placeholder='category name' onChange={(e)=> setCategoryName(e.target.value)}/>
             <div>
-            <input type="text" className='newtaskInput border border-gray-400' onFocus={()=> <EmojiPicker />}/>
+            <input type="text" className='newtaskInput border border-gray-400' value={catIcon} />
+            <EmojiPicker onEmojiClick={(e)=> setCatIcon(e.emoji)}/>
             </div>
-            <button className='bg-blue-700 text-white w-full rounded-lg py-2'>Add</button>
+            <button 
+            className={`bg-blue-700 text-white w-full rounded-lg py-2 ${!catIcon || !categoryName ? 'bg-gray-700':''}`} 
+            disabled={!catIcon || !categoryName}>Add Category</button>
           </form>
         </div>
 
