@@ -3,12 +3,12 @@ import AddNewTask from './AddNewTask'
 import Categories from './Categories'
 import Tasks from './Tasks'
 
-function MainUI({ user, userFirstLogin, setUserFirstLogin }) {
-    const [categories, setCategories] = useState([])
-    const [tasks, setTasks] = useState([])
+
+function MainUI({ tasks,setTasks, user, userFirstLogin, setUserFirstLogin, setIsLoading, setCategories, categories }) {
     const [menuOpen, setMenuOpen] = useState(false);
     const [visibleTasks, setVisibleTasks] = useState(null)
     const [showGuide, setShowGuide] = useState(userFirstLogin.firstLogin)
+    
 
     const handleVisibleTasks = (categoryName) => {
         setVisibleTasks(categoryName)
@@ -19,6 +19,7 @@ function MainUI({ user, userFirstLogin, setUserFirstLogin }) {
                 <Categories
                     tasks={tasks}
                     setTasks={setTasks}
+                    setIsLoading={setIsLoading}
                     categories={categories}
                     setCategories={setCategories}
                     setVisibleTasks={setVisibleTasks}

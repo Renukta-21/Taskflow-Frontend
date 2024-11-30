@@ -26,7 +26,6 @@ function Tasks({ tasks, setTasks, visibleTasks, showGuide, setShowGuide, menuOpe
 
   return (
     <div className="relative flex flex-col h-full w-full">
-
       {showGuide && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-10"></div>
       )}
@@ -55,8 +54,8 @@ function Tasks({ tasks, setTasks, visibleTasks, showGuide, setShowGuide, menuOpe
       )}
 
       {/* Lista de tareas */}
-      <div className={`relative z-20 ${showGuide ? 'pointer-events-none' : ''}`}>
-        {filteredTasks.length > 0 ? (
+      <div className={`relative z-20 mt-2 ${showGuide ? 'pointer-events-none' : ''}`}>
+        {filteredTasks&& filteredTasks.length > 0 ? (
           filteredTasks.map(task => (
             <TaskCard
               key={task._id}
@@ -84,10 +83,8 @@ function Tasks({ tasks, setTasks, visibleTasks, showGuide, setShowGuide, menuOpe
 
 const TaskCard = ({ title, description, category }) => {
   return (
-    <div>
-      <hr />
-      <p>{category.icon}{title}</p>
-      <p>{description}</p>
+    <div className=' bg-white py-2 rounded-xl'>
+      <p> <input type="checkbox" name="" id="" /> {category.icon}{title} {description}</p>
     </div>
   )
 }

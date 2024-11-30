@@ -16,37 +16,34 @@ const colaborativeSpaces = [
     participants: ['Eduardo', 'Ceron', 'Erika'],
   },
 ]
-const calculateTasksPerCategory = (categories) => {
-  return categories.map((category) => {
-    return {
-      ...category,
-      taskCount: category.tasks.length,
-    };
-  });
-};
 
 
 function Categories({
   tasks,
   categories,
+  setIsLoading,
   setCategories,
   setVisibleTasks,
   handleVisibleTasks,
 }) {
 
-  const [newCategoryMenu, setNewCategoryMenu] = useState(true)
+  const [newCategoryMenu, setNewCategoryMenu] = useState(false)
   const [catIcon, setCatIcon] = useState('')
   const [categoryName, setCategoryName] = useState('')
-  useEffect(() => {
-    const getCategories = async () => {
-      const response = await categoriesService.getAll()
-      const categoriesWithTaskCount = calculateTasksPerCategory(response);
-      setCategories(categoriesWithTaskCount)
-      console.log(response)
+  
+  const handleNewCategory = async(e)=>{
+    e.preventDefault()
+    const newCategory = {
+      name:categoryName,
+      icon:catIcon
     }
-    getCategories()
-  }, [tasks])
-
+    try {
+      const response = await categoriesService.create(newCategory)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const handleReset = async () => {
     try {
       const response = await resetServices.resetDB()
@@ -85,24 +82,29 @@ function Categories({
         Show all tasks
       </button>
       <div className={`relative mt-4`} >
-      <div
-          className={`absolute top-[50%] -translate-y-[50%] duration-500 transition-all left-[350px] text-black bg-white p-4 z-30 shadow-2xl ${newCategoryMenu ? '': 'opacity-0 pointer-events-none'}`}>
-          <form action="" className=''>
-            <input type="text" className='newtaskInput border border-gray-400' placeholder='category name' onChange={(e)=> setCategoryName(e.target.value)}/>
-            <div>
-            <input type="text" className='newtaskInput border border-gray-400' value={catIcon} />
-            <EmojiPicker onEmojiClick={(e)=> setCatIcon(e.emoji)}/>
+        <div
+          className={`absolute top-[50%] -translate-y-[50%] duration-500 transition-all left-[350px] text-black bg-white p-4 z-30 shadow-2xl ${newCategoryMenu ? '' : 'opacity-0 pointer-events-none'}`}>
+          <form action="" className='' onSubmit={handleNewCategory}>
+            <div className='flex flex-col'>
+              <label htmlFor="categoryField">Category name</label>
+              <input type="text" id='categoryField' className='newtaskInput border border-gray-400' onChange={(e) => setCategoryName(e.target.value)} />
+              <label htmlFor="iconField">Icon</label>
+              <input type="text" id='iconField' className='newtaskInput border border-gray-400' value={catIcon} readOnly/>
+              <EmojiPicker onEmojiClick={(e) => setCatIcon(e.emoji)} />
             </div>
-            <button 
-            className={`bg-blue-700 text-white w-full rounded-lg py-2 ${!catIcon || !categoryName ? 'bg-gray-700':''}`} 
-            disabled={!catIcon || !categoryName}>Add Category</button>
+            <div>
+            </div>
+            <button
+            
+              className={`bg-blue-700 text-white w-full rounded-lg py-2 ${!catIcon || !categoryName ? 'bg-gray-700' : ''}`}
+              disabled={!catIcon || !categoryName}>Add Category</button>
           </form>
         </div>
 
-        <button className="w-full bg-blue-800 text-white rounded-xl py-3" onClick={()=> setNewCategoryMenu(!newCategoryMenu)}>
-          {newCategoryMenu ? 'cancel':'Create new list'}
+        <button className="w-full bg-blue-800 text-white rounded-xl py-3" onClick={() => setNewCategoryMenu(!newCategoryMenu)}>
+          {newCategoryMenu ? 'cancel' : 'Create new list'}
         </button>
-        
+
       </div>
       <br />
       <br />
@@ -137,26 +139,5 @@ const ColaborativeCard = ({ task, participants }) => {
     </div>
   )
 }
-const EmojiInput = () => {
-  const [selectedEmoji, setSelectedEmoji] = useState("");
-
-  const handleEmojiClick = (event, emojiObject) => {
-    setSelectedEmoji(emojiObject.emoji);
-  };
-
-  return (
-    <div>
-      <input
-        type="text"
-        value={selectedEmoji}
-        readOnly
-        placeholder="Select an emoji"
-        className="border p-2 rounded-md w-full"
-      />
-      
-      
-    </div>
-  );
-};
 
 export default Categories

@@ -16,9 +16,9 @@ const getAll = async () => {
   }
 }
 
-const create = async (newTask) => {
+const create = async (newCategory) => {
   try {
-    const response = await axios.post(baseURL, newTask, {
+    const response = await axios.post(baseURL, newCategory, {
       headers: {
         Authorization: tokenService.getToken(),
       },
