@@ -2,7 +2,7 @@ import { useState } from 'react';
 import tasksServices from './services/tasksServices';
 import userServices from './services/userServices';
 
-function AddNewTask({  bsetTasks, categories, showGuide, menuOpen, setMenuOpen, userFirstLogin, setShowGuide }) {
+function AddNewTask({  setTasks, categories, showGuide, menuOpen, setMenuOpen, userFirstLogin, setShowGuide }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [newTaskDescription, setNewTaskDescription] = useState('');
   const [newTaskTitle, setNewTaskTitle] = useState('');
@@ -22,6 +22,7 @@ function AddNewTask({  bsetTasks, categories, showGuide, menuOpen, setMenuOpen, 
       const response = await tasksServices.create(newTask);
       const category = categories.find(cat => cat._id === selectedCategory);
       setTasks(prevTasks => [...prevTasks, { ...response, category }]);
+      setMenuOpen(false)
       setShowGuide(false)
       if(userFirstLogin){
         const response = await userServices.setFirstLogin({firstLogin:false})
@@ -41,8 +42,9 @@ function AddNewTask({  bsetTasks, categories, showGuide, menuOpen, setMenuOpen, 
       >
         {menuOpen ? 'Cancel' : 'Create a new task'}
       </button>
+      
       <div
-        className={`absolute -top-[280px] w-[400px] flex flex-col transition-all duration-500 bg-white p-5 rounded-xl ${
+        className={`absolute -top-[280px] w-[400px] z-20 shadow-2xl flex flex-col transition-all duration-500 bg-white p-5 rounded-xl ${
           menuOpen ? '' : 'opacity-0 translate-y-5 pointer-events-none'
         }`}
       >

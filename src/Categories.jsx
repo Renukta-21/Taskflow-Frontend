@@ -1,7 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import categoriesService from './services/categoriesService'
 import resetServices from './services/resetServices'
-/* import resetServices from './services/resetServices' */
+import EmojiPicker from 'emoji-picker-react'
+
 
 const colaborativeSpaces = [
   {
@@ -15,30 +16,41 @@ const colaborativeSpaces = [
     participants: ['Eduardo', 'Ceron', 'Erika'],
   },
 ]
+const calculateTasksPerCategory = (categories) => {
+  return categories.map((category) => {
+    return {
+      ...category,
+      taskCount: category.tasks.length,
+    };
+  });
+};
+
+
 function Categories({
+  tasks,
   categories,
   setCategories,
   setVisibleTasks,
   handleVisibleTasks,
 }) {
+
+  const [newCategoryMenu, setNewCategoryMenu] = useState(true)
   useEffect(() => {
     const getCategories = async () => {
       const response = await categoriesService.getAll()
-      setCategories(response)
+      const categoriesWithTaskCount = calculateTasksPerCategory(response);
+      setCategories(categoriesWithTaskCount)
+      console.log(response)
     }
     getCategories()
-    /* const resetDB = async()=>{a
-      await resetServices.resetDB()
-    }
-    resetDB() */
-  }, [])
+  }, [tasks])
 
-  const handleReset = async()=>{
+  const handleReset = async () => {
     try {
       const response = await resetServices.resetDB()
       console.log(response)
     } catch (error) {
-        console.log(error.message)
+      console.log(error.message)
     }
   }
   return (
@@ -58,7 +70,7 @@ function Categories({
                   <span className="px-4">{cat.name}</span>
                 </div>
                 <div>
-                  <p>0</p>
+                  <p>{cat.taskCount}</p>
                 </div>
               </button>
             )
@@ -70,9 +82,23 @@ function Categories({
       >
         Show all tasks
       </button>
-      <button className="w-full bg-blue-800 text-white rounded-xl py-3 mt-4">
-        Create new list
-      </button>
+      <div className={`relative mt-4`} >
+      <div
+          className={`absolute top-[50%] -translate-y-[50%] duration-500 transition-all left-[350px] text-black bg-white p-4 z-30 shadow-2xl ${newCategoryMenu ? '': 'opacity-0 pointer-events-none'}`}>
+          <form action="" className=''>
+            <input type="text" className='newtaskInput border border-gray-400' placeholder='category name' />
+            <div>
+            <input type="text" className='newtaskInput border border-gray-400' onFocus={()=> <EmojiPicker />}/>
+            </div>
+            <button className='bg-blue-700 text-white w-full rounded-lg py-2'>Add</button>
+          </form>
+        </div>
+
+        <button className="w-full bg-blue-800 text-white rounded-xl py-3" onClick={()=> setNewCategoryMenu(!newCategoryMenu)}>
+          {newCategoryMenu ? 'cancel':'Create new list'}
+        </button>
+        
+      </div>
       <br />
       <br />
       <h3 className="text-2xl mb-2">Group</h3>
@@ -86,7 +112,7 @@ function Categories({
           />
         ))}
       </div>
-        <button className='bg-red-500 mt-10 py-2 px-4' onClick={handleReset}>Reset Defaullt Values</button>
+      <button className='bg-red-500 mt-10 py-2 px-4' onClick={handleReset}>Reset Defaullt Values</button>
     </div>
   )
 }
@@ -106,4 +132,26 @@ const ColaborativeCard = ({ task, participants }) => {
     </div>
   )
 }
+const EmojiInput = () => {
+  const [selectedEmoji, setSelectedEmoji] = useState("");
+
+  const handleEmojiClick = (event, emojiObject) => {
+    setSelectedEmoji(emojiObject.emoji);
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={selectedEmoji}
+        readOnly
+        placeholder="Select an emoji"
+        className="border p-2 rounded-md w-full"
+      />
+      
+      
+    </div>
+  );
+};
+
 export default Categories
