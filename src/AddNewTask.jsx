@@ -24,6 +24,9 @@ function AddNewTask({  setTasks, categories, showGuide, menuOpen, setMenuOpen, u
       setTasks(prevTasks => [...prevTasks, { ...response, category }]);
       setMenuOpen(false)
       setShowGuide(false)
+      newTaskDescription('')
+      newTaskTitle('')
+      
       if(userFirstLogin){
         const response = await userServices.setFirstLogin({firstLogin:false})
         localStorage.setItem('firstLogin', JSON.stringify({firstLogin:false}))

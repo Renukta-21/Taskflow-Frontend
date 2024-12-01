@@ -39,7 +39,7 @@ function App() {
         setUser={setUser}
         userFirstLogin={userFirstLogin}
         setUserFirstLogin={setUserFirstLogin} />
-      ) : isLoading ? <p>User data loading, please wait</p> : <MainUI user={user} tasks={tasks} setTasks={setTasks} userFirstLogin={userFirstLogin} categories={categories} setCategories={setCategories}/>  }
+      ) : isLoading ? <p>User data loading, please wait</p> : <MainUI user={user} tasks={tasks} setTasks={setTasks} setUserFirstLogin={setUserFirstLogin} userFirstLogin={userFirstLogin} categories={categories} setCategories={setCategories}/>  }
     </div>
   )
 }
