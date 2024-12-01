@@ -19,6 +19,9 @@ const colaborativeSpaces = [
 
 
 function Categories({
+  setTasks,
+  setFirstLogin,
+  setShowGuide,
   setCategories,
   categories,
   setVisibleTasks,
@@ -43,11 +46,18 @@ function Categories({
     }
   }
   const handleReset = async () => {
-    try {
-      const response = await resetServices.resetDB()
-      console.log(response)
-    } catch (error) {
-      console.log(error.message)
+    const sureReset = window.confirm('Are you sure you want to delete all user records? This action will reset default account values')
+    if(sureReset){
+      try {
+        const response = await resetServices.resetDB()
+        setCategories([])
+        setTasks([])
+        setFirstLogin(true)
+        setShowGuide(true)
+        console.log(response)
+      } catch (error) {
+        console.log(error.message)
+      }
     }
   }
   return (
@@ -120,7 +130,7 @@ function Categories({
           />
         ))}
       </div>
-      <button className='bg-red-500 mt-10 py-2 px-4' onClick={handleReset}>Reset Defaullt Values</button>
+      <button className='bg-red-500 mt-10 py-2 px-4' onClick={handleReset}>Reset Default Values</button>
     </div>
   )
 }

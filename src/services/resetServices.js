@@ -1,14 +1,18 @@
-import axios from "axios";
-import tokenService from "./tokenService";
+import axios from 'axios'
+import tokenService from './tokenService'
 
 const baseURL = '/api/reset'
-const resetDB = async()=>{
-    const response = await axios.post(baseURL, {
+const resetDB = async () => {
+  try {
+    const response = await axios.post(baseURL,null, {
         headers:{
-            Authorization: tokenService.getToken() 
+            Authorization: tokenService.getToken()
         }
     })
-    return response
+    return response.data
+  } catch (error) {
+    throw new Error(error.response.data.error)
+  }
 }
 
-export default {resetDB}
+export default { resetDB }

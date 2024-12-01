@@ -19,11 +19,13 @@ function MainUI({ tasks,setTasks, user, userFirstLogin, setUserFirstLogin, setIs
                 <Categories
                     tasks={tasks}
                     setTasks={setTasks}
+                    setShowGuide={setShowGuide}
                     setIsLoading={setIsLoading}
                     categories={categories}
                     setCategories={setCategories}
                     setVisibleTasks={setVisibleTasks}
                     handleVisibleTasks={handleVisibleTasks}
+                    setFirstLogin={setUserFirstLogin}
                 />
                 <div className='flex  flex-col justify-between py-8 px-5 w-full'>
                     <div className='flex flex-col'>

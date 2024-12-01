@@ -57,6 +57,7 @@ function Tasks({ tasks, setTasks, visibleTasks, showGuide, menuOpen }) {
           showGuide ? 'pointer-events-none' : ''
         }`}
       >
+        {visibleTasks && filteredTasks.length>0 && <h2 className='text-xl mb-4'>{filteredTasks[0].category.icon} <span>{visibleTasks}</span></h2> }
         {filteredTasks && filteredTasks.length > 0
           ? filteredTasks.map((task) => (
               <TaskCard
@@ -92,7 +93,7 @@ const TaskCard = ({ title, description, category, visibleTasks, onRemove }) => {
   }
   return (
     <div
-      className={`bg-white py-2 rounded-xl px-5 transition-all duration-500 ${
+      className={`bg-white py-2 rounded-xl px-5 transition-all duration-500 mb-2${
         isRemoved ? 'opacity-0 -translate-y-4' : ''
       }`}
     >
@@ -107,7 +108,7 @@ const TaskCard = ({ title, description, category, visibleTasks, onRemove }) => {
         {visibleTasks === null && <span>{category.icon}</span>}
         <span className={`${isChecked ? 'line-through' : ''}`}>
           {' '}
-          <span className="font-semibold">{title}</span> {description}
+          <span className="font-semibold inline-block w-[150px]  ">{title}</span> {description}
         </span>
       </p>
     </div>
