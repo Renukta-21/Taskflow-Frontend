@@ -34,7 +34,7 @@ function App() {
   }, [tasks, user])
 
   return (
-    <div className='flex w-full  min-h-screen'>
+    <div className='flex w-full  min-h-screen max-h-screen'>
       {!user ? (<LoginForm user={user}
         setUser={setUser}
         userFirstLogin={userFirstLogin}

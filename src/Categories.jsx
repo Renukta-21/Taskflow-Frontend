@@ -53,9 +53,10 @@ function Categories({
   return (
     <div className="w-[420px] py-6 px-3  rounded-3xl mx-2 my-2 bg-white">
       <h3 className="text-2xl mb-5">Private</h3>
-      <div className="flex flex-col">
+      <div className="flex flex-col ">
         {categories.length > 0 &&
-          categories.map((cat) => {
+          <div className='max-h-[200px] overflow-y-auto'>
+          {categories.map((cat) => {
             return (
               <button
                 className="sidebarButton"
@@ -71,7 +72,9 @@ function Categories({
                 </div>
               </button>
             )
-          })}
+          }
+          )}</div>}
+          
       </div>
       <button
         className="sidebarButton justify-center bg-slate-300"
