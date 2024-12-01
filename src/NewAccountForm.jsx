@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import userServices from './services/userServices'
 
-function NewAccountForm({setHasAccount, hasAccount}) {
+function NewAccountForm({setHasAccount}) {
     const [email, setEmail] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -16,7 +16,7 @@ const [error, setError] = useState(null)
         try {
             await userServices.create(userCredentials)
             alert('Account created, please login')
-            setHasAccount(!hasAccount)
+            setHasAccount(true)
         } catch (error) {
             setError(error.message)
         }
@@ -28,7 +28,7 @@ return (
         <h2 className="font-bold text-center mt-10">Sign up</h2>
         <form
           action=""
-          className="max-w-[300px] mx-auto mt-2"
+          className="max-w-[300px] mx-auto "
           onSubmit={handleSubmit}
         >
           <label htmlFor="usernameField">Username</label>
@@ -53,7 +53,8 @@ return (
             onChange={(e) => setEmail(e.target.value)}
           />
           <br />
-          <button className="w-full bg-green-500 py-3 ">Create Account</button>
+          <button className="w-full bg-green-500 py-3 mb-3">Create Account</button>
+          <button onClick={()=> setHasAccount(true)} className='underline w-full text-center'>I have an account</button>
         </form>
         {error && <p className="text-center text-red-600 mt-8">{error}</p>}
       </div>

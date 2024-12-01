@@ -5,7 +5,7 @@ import NewAccountForm from './NewAccountForm'
 import userServices from './services/userServices'
 
 function LoginForm({ setUser, setUserFirstLogin, userFirstLogin }) {
-  const [hasAccount, setHasAccount] = useState(false)
+  const [hasAccount, setHasAccount] = useState(true)
   const [userFields, setUserFields] = useState({
     username: '',
     password: '',
