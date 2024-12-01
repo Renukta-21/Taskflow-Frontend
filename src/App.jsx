@@ -27,9 +27,11 @@ function App() {
       setCategories(categoriesWithTaskCount)
       setIsLoading(false)
     }
-    getCategories()
+    if(user){
+      getCategories()
+    }
     
-  }, [tasks])
+  }, [tasks, user])
 
   return (
     <div className='flex w-full  min-h-screen'>

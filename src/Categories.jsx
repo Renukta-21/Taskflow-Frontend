@@ -19,10 +19,7 @@ const colaborativeSpaces = [
 
 
 function Categories({
-  tasks,
   categories,
-  setIsLoading,
-  setCategories,
   setVisibleTasks,
   handleVisibleTasks,
 }) {

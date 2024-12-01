@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react'
 import tasksServices from './services/tasksServices'
 
-function Tasks({ tasks, setTasks, visibleTasks, showGuide, setShowGuide, menuOpen }) {
+function Tasks({
+  tasks,
+  setTasks,
+  visibleTasks,
+  showGuide,
+  menuOpen,
+}) {
   const [error, setError] = useState(null)
-
   useEffect(() => {
     const getTasks = async () => {
       try {
@@ -17,12 +22,9 @@ function Tasks({ tasks, setTasks, visibleTasks, showGuide, setShowGuide, menuOpe
   }, [])
 
   const filteredTasks = visibleTasks
-    ? tasks.filter(task => task.category.name === visibleTasks)
+    ? tasks.filter((task) => task.category.name === visibleTasks)
     : tasks
 
-  const handleGuideClose = () => {
-    setShowGuide(false) 
-  }
 
   return (
     <div className="relative flex flex-col h-full w-full">
@@ -36,40 +38,38 @@ function Tasks({ tasks, setTasks, visibleTasks, showGuide, setShowGuide, menuOpe
           <h2 className="text-white text-2xl mb-4">
             Welcome! Start by adding a task to your list!
           </h2>
-          {/* <button
-            onClick={handleGuideClose}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Got it!
-          </button> */}
         </div>
       )}
 
       {/* Flecha animada apuntando al botón */}
       {showGuide && !menuOpen && (
         <div className="absolute z-30 top-64  left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce ">
-          <div className='h-[200px] w-1 bg-white'></div>
+          <div className="h-[200px] w-1 bg-white"></div>
           <div className="w-10 h-10 border-r-4 border-b-4 border-white transform rotate-45 "></div>
         </div>
       )}
 
       {/* Lista de tareas */}
-      <div className={`relative z-20 mt-2 ${showGuide ? 'pointer-events-none' : ''}`}>
-        {filteredTasks&& filteredTasks.length > 0 ? (
-          filteredTasks.map(task => (
-            <TaskCard
-              key={task._id}
-              title={task.title}
-              category={task.category}
-              description={task.description}
-            />
-          ))
-        ) : (
-          !showGuide && 
-          <p className=''>
-            No tasks found {visibleTasks !== null && 'in this category'}
-          </p>
-        )}
+      <div
+        className={`relative z-20 mt-2 ${
+          showGuide ? 'pointer-events-none' : ''
+        }`}
+      >
+        {filteredTasks && filteredTasks.length > 0
+          ? filteredTasks.map((task) => (
+              <TaskCard
+                key={task._id}
+                visibleTasks={visibleTasks}
+                title={task.title}
+                category={task.category}
+                description={task.description}
+              />
+            ))
+          : !showGuide && (
+              <p className="">
+                No tasks found {visibleTasks !== null && 'in this category'}
+              </p>
+            )}
         {/* {!filteredTasks.length > 0 && (
           <h2 className='text-xl underline'>
             Consider adding tasks to your day!
@@ -81,10 +81,17 @@ function Tasks({ tasks, setTasks, visibleTasks, showGuide, setShowGuide, menuOpe
   )
 }
 
-const TaskCard = ({ title, description, category }) => {
+const TaskCard = ({ title, description, category, visibleTasks }) => {
+  const [isChecked, setIsChecked] = useState(false)
+
+  const handleChecked = ()=>setIsChecked(!isChecked)
   return (
-    <div className=' bg-white py-2 rounded-xl'>
-      <p> <input type="checkbox" name="" id="" /> {category.icon}{title} {description}</p>
+    <div className=" bg-white py-2 rounded-xl px-5">
+      <p>
+        <input type="checkbox" name="" id="" className="scale-150 mr-4" onChange={handleChecked}/>
+        {visibleTasks===null && <span>{category.icon}</span>}
+        <span className={`${isChecked? 'line-through':''}`}> <span className='font-semibold'>{title}</span>  {description}</span>
+      </p>
     </div>
   )
 }

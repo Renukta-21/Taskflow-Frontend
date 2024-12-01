@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import userServices from './services/userServices'
 
 function NewAccountForm({setHasAccount, hasAccount}) {
