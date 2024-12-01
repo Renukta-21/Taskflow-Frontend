@@ -27,4 +27,17 @@ const create = async(newTask) => {
     throw new Error(error.response.data.error)
   }
 }
-export default { getAll, create }
+
+const deleteTask =async(taskId)=>{
+try {
+  const response = await axios.delete(`${baseURL}/${taskId}`, {
+    headers:{
+      Authorization:tokenService.getToken()
+    }
+  })
+  return response.data
+} catch (error) {
+  throw new Error(error.response.data.error)
+}
+}
+export default { getAll, create, deleteTask }

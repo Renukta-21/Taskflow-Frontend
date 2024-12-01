@@ -1,13 +1,7 @@
 import { useEffect, useState } from 'react'
 import tasksServices from './services/tasksServices'
 
-function Tasks({
-  tasks,
-  setTasks,
-  visibleTasks,
-  showGuide,
-  menuOpen,
-}) {
+function Tasks({ tasks, setTasks, visibleTasks, showGuide, menuOpen }) {
   const [error, setError] = useState(null)
   useEffect(() => {
     const getTasks = async () => {
@@ -25,6 +19,14 @@ function Tasks({
     ? tasks.filter((task) => task.category.name === visibleTasks)
     : tasks
 
+  const handleRemove = async (taskId) => {
+    try {
+      await tasksServices.deleteTask(taskId)
+      setTasks((prevTasks) => prevTasks.filter((t) => t._id !== taskId))
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
   return (
     <div className="relative flex flex-col h-full w-full">
@@ -63,6 +65,7 @@ function Tasks({
                 title={task.title}
                 category={task.category}
                 description={task.description}
+                onRemove={() => handleRemove(task._id)}
               />
             ))
           : !showGuide && (
@@ -70,27 +73,42 @@ function Tasks({
                 No tasks found {visibleTasks !== null && 'in this category'}
               </p>
             )}
-        {/* {!filteredTasks.length > 0 && (
-          <h2 className='text-xl underline'>
-            Consider adding tasks to your day!
-          </h2>
-        )} */}
         {error && <p>{error}</p>}
       </div>
     </div>
   )
 }
 
-const TaskCard = ({ title, description, category, visibleTasks }) => {
+const TaskCard = ({ title, description, category, visibleTasks, onRemove }) => {
   const [isChecked, setIsChecked] = useState(false)
+  const [isRemoved, setIsRemoved] = useState(false)
 
-  const handleChecked = ()=>setIsChecked(!isChecked)
+  const handleChecked = () => {
+    setIsChecked(true)
+    setTimeout(() => {
+      setIsRemoved(true)
+      setTimeout(onRemove, 500)
+    }, 200)
+  }
   return (
-    <div className=" bg-white py-2 rounded-xl px-5">
+    <div
+      className={`bg-white py-2 rounded-xl px-5 transition-all duration-500 ${
+        isRemoved ? 'opacity-0 -translate-y-4' : ''
+      }`}
+    >
       <p>
-        <input type="checkbox" name="" id="" className="scale-150 mr-4" onChange={handleChecked}/>
-        {visibleTasks===null && <span>{category.icon}</span>}
-        <span className={`${isChecked? 'line-through':''}`}> <span className='font-semibold'>{title}</span>  {description}</span>
+        <input
+          type="checkbox"
+          name=""
+          id=""
+          className="scale-150 mr-4"
+          onChange={handleChecked}
+        />
+        {visibleTasks === null && <span>{category.icon}</span>}
+        <span className={`${isChecked ? 'line-through' : ''}`}>
+          {' '}
+          <span className="font-semibold">{title}</span> {description}
+        </span>
       </p>
     </div>
   )

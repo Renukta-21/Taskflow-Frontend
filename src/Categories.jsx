@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import categoriesService from './services/categoriesService'
 import resetServices from './services/resetServices'
 import EmojiPicker from 'emoji-picker-react'
@@ -19,6 +19,7 @@ const colaborativeSpaces = [
 
 
 function Categories({
+  setCategories,
   categories,
   setVisibleTasks,
   handleVisibleTasks,
@@ -36,7 +37,7 @@ function Categories({
     }
     try {
       const response = await categoriesService.create(newCategory)
-      console.log(response)
+      setCategories(prevCat=> [...prevCat, response])
     } catch (error) {
       console.log(error)
     }
