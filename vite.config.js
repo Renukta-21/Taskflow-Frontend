@@ -7,7 +7,8 @@ export default defineConfig({
   server:{
     proxy:{
       '/api':{
-        target:'http://localhost:3001',
+        /* target:'http://localhost:3001',  local DB connection*/
+        target:'https://taskflow-backend-4bpf.onrender.com',
         changeOrigin:true
       }
     }
