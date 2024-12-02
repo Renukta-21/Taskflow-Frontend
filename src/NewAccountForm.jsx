@@ -14,9 +14,9 @@ const [error, setError] = useState(null)
             username, password, email
         }
         try {
-            await userServices.create(userCredentials)
-            alert('Account created, please login')
-            setHasAccount(true)
+          await userServices.create(userCredentials)
+          alert('Account created, please sign in!')
+          setHasAccount(true)  
         } catch (error) {
             setError(error.message)
         }
@@ -54,8 +54,8 @@ return (
           />
           <br />
           <button className="w-full bg-green-500 py-3 mb-3">Create Account</button>
-          <button onClick={()=> setHasAccount(true)} className='underline w-full text-center'>I have an account</button>
         </form>
+        <button onClick={()=> setHasAccount(true)} className='underline w-full text-center'>I have an account</button>
         {error && <p className="text-center text-red-600 mt-8">{error}</p>}
       </div>
     </div>

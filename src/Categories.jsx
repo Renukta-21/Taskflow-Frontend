@@ -130,7 +130,7 @@ function Categories({
           />
         ))}
       </div>
-      <button className='bg-red-500 mt-10 py-2 px-4' onClick={handleReset}>Reset Default Values</button>
+      <button className='bg-red-500 mt-10 py-2 px-4 rounded-xl' onClick={handleReset}>Reset Default Values</button>
     </div>
   )
 }

@@ -57,7 +57,11 @@ function Tasks({ tasks, setTasks, visibleTasks, showGuide, menuOpen }) {
           showGuide ? 'pointer-events-none' : ''
         }`}
       >
-        {visibleTasks && filteredTasks.length>0 && <h2 className='text-xl mb-4'>{filteredTasks[0].category.icon} <span>{visibleTasks}</span></h2> }
+        {visibleTasks && filteredTasks.length > 0 && (
+          <h2 className="text-xl mb-4">
+            {filteredTasks[0].category.icon} <span>{visibleTasks}</span>
+          </h2>
+        )}
         {filteredTasks && filteredTasks.length > 0
           ? filteredTasks.map((task) => (
               <TaskCard
@@ -93,22 +97,26 @@ const TaskCard = ({ title, description, category, visibleTasks, onRemove }) => {
   }
   return (
     <div
-      className={`bg-white py-2 rounded-xl px-5 transition-all duration-500 mb-2${
-        isRemoved ? 'opacity-0 -translate-y-4' : ''
+      className={`bg-white py-2 rounded-xl px-5 transition-all duration-500 mb-2 relative ${
+        isRemoved ? 'opacity-0 -translate-y-11' : ''
       }`}
     >
-      <p>
+      <p className="">
         <input
           type="checkbox"
           name=""
           id=""
-          className="scale-150 mr-4"
+          className="scale-150 mr-4 relative"
           onChange={handleChecked}
         />
+        {isChecked && <div className='absolute  inset-0 '><div className='inset-x-0 bg-gray-600 absolute h-[1px] top-[50%] mx-4'></div></div>}
         {visibleTasks === null && <span>{category.icon}</span>}
-        <span className={`${isChecked ? 'line-through' : ''}`}>
+        <span>
           {' '}
-          <span className="font-semibold inline-block w-[150px]  ">{title}</span> {description}
+          <span className="font-semibold inline-block w-[150px]  ">
+            {title}
+          </span>{' '}
+          {description}
         </span>
       </p>
     </div>

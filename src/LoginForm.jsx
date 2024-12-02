@@ -31,7 +31,6 @@ function LoginForm({ setUser, setUserFirstLogin, userFirstLogin }) {
   const handleLogin = async (e) => {
     e.preventDefault()
     if (!userFields.username || !userFields.password) {
-      /* setError('Todos los campos son obligatorios'); */
       alert('Todos los campos son obligatorios')
       return
     }
