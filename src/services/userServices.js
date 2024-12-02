@@ -1,7 +1,8 @@
 import axios from "axios"
 import tokenService from "./tokenService"
+const API_URL = import.meta.env.VITE_API_URL
+const baseURL = `${API_URL}/api/users`
 
-const baseURL = '/api/users'
 const create = async (userCredentials) => {
     try {
         const response = await axios.post(baseURL, userCredentials)

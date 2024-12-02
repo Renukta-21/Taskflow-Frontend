@@ -1,6 +1,7 @@
 import axios from 'axios'
 import tokenService from './tokenService'
-const baseURL = '/api/categories'
+const API_URL = import.meta.env.VITE_API_URL
+const baseURL = `${API_URL}/api/categories`
 
 const getAll = async () => {
   try {

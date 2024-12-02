@@ -1,7 +1,8 @@
 import axios from 'axios'
 import tokenService from './tokenService'
+const API_URL = import.meta.env.VITE_API_URL
+const baseURL = `${API_URL}/api/tasks`
 
-const baseURL = '/api/tasks'
 const getAll = async () => {
   try {
     const response = await axios.get(baseURL, {
